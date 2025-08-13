@@ -36,7 +36,29 @@ public class ProductService {
                 .map(productMapper::toProductResponse)
                 .collect(Collectors.toList());
     }
+    public ProductResponse getProductById(int id) {
+         return productMapper.toProductResponse(productRepository.findById(id).orElseThrow(()->new RuntimeException("Product not found with id: "+id)));
+    }
 
-    
+    public ProductResponse updateProduct(int id, ProductRequest request) {
 
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        existingProduct.setName(request.name());
+        existingProduct.setDescription(request.description());
+        existingProduct.setAvailableQuantity(request.availableQuantity());
+        existingProduct.setPrice(request.price());
+
+        Category category = categoryRepository.findById(request.categoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+        existingProduct.setCategory(category);
+        Product updatedProduct = productRepository.save(existingProduct);
+
+        return productMapper.toProductResponse(updatedProduct);
+    }
+
+
+    public void deleteProduct(int id) {
+        productRepository.deleteById(id);
+    }
 }

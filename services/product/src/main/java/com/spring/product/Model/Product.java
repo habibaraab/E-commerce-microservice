@@ -1,4 +1,4 @@
-package com.spring.product;
+package com.spring.product.Model;
 
 import jakarta.persistence.*;
 import lombok.*;

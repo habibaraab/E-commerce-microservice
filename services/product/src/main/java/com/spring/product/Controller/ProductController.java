@@ -1,6 +1,8 @@
 package com.spring.product.Controller;
 
 
+import com.spring.product.DTO.ProductPurchaseRequest;
+import com.spring.product.DTO.ProductPurchaseResponse;
 import com.spring.product.DTO.ProductRequest;
 import com.spring.product.DTO.ProductResponse;
 import com.spring.product.Service.ProductService;
@@ -42,5 +44,12 @@ public class ProductController {
     public ResponseEntity<ProductResponse> deleteProduct(@PathVariable int id) {
         productService.deleteProduct(id);
         return ResponseEntity.accepted().build();
+    }
+
+    @PostMapping("/purchase")
+    public ResponseEntity<List<ProductPurchaseResponse>> purchaseProducts(
+            @RequestBody List<ProductPurchaseRequest> request
+    ) {
+        return ResponseEntity.ok(productService.purchaseProducts(request));
     }
 }

@@ -23,6 +23,14 @@ public interface ProductMapper {
     @Mapping(source = "category.description", target = "categoryDescription")
     ProductResponse toProductResponse(Product product);
 
+    @Mapping(target = "productId", source = "product.id")
+    @Mapping(target = "name", source = "product.name")
+    @Mapping(target = "description", source = "product.description")
+    @Mapping(target = "price", source = "product.price")
+    @Mapping(target = "quantity", source = "quantity")
+    ProductPurchaseResponse toProductPurchaseResponse(Product product, double quantity);
+
+
     ProductRequest toProductRequest(ProductResponse response);
 
     ProductPurchaseRequest toPurchaseRequest(ProductPurchaseResponse response);

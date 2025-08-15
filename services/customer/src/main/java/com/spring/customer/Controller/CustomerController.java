@@ -24,9 +24,12 @@ public class CustomerController {
         return ResponseEntity.ok(customerResponse);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CustomerResponse>findCustomerById(@PathVariable String id) {
-        CustomerResponse customerResponse=customerService.getCustomerById(id);
+
+    @GetMapping("/{customer-id}")
+    public ResponseEntity<CustomerResponse> findById(
+            @PathVariable("customer-id") String customerId
+    ) {
+        CustomerResponse customerResponse=customerService.getCustomerById(customerId);
         return ResponseEntity.ok(customerResponse);
     }
 
@@ -42,9 +45,11 @@ public class CustomerController {
         return ResponseEntity.accepted().build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<CustomerResponse> deleteCustomer(@PathVariable String id) {
-        this.customerService.deleteCustomer(id);
+    @DeleteMapping("/{customer-id}")
+    public ResponseEntity<Void> delete(
+            @PathVariable("customer-id") String customerId
+    ) {
+        this.customerService.deleteCustomer(customerId);
         return ResponseEntity.accepted().build();
     }
 

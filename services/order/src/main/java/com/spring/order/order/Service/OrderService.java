@@ -16,6 +16,7 @@ import com.spring.order.payment.PaymentRequest;
 import com.spring.order.product.DTO.PurchaseRequest;
 import com.spring.order.product.service.ProductClient;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
     private final OrderRepository repository;
@@ -41,14 +43,27 @@ public class OrderService {
 
     @Transactional
     public Integer createOrder(OrderRequest request) {
-        var customer = this.customerClient.findCustomerById(request.customerId())
-                .orElseThrow(() -> new BusinessException("Cannot create order:: No customer exists with the provided ID"));
+        log.info("🚀 Starting order creation for reference: {}", request.reference());
 
+        // 1️⃣ جلب العميل
+        log.info("🔍 Fetching customer with ID: {}", request.customerId());
+        var customer = this.customerClient.findCustomerById(request.customerId())
+                .orElseThrow(() -> {
+                    log.error("❌ No customer found with ID: {}", request.customerId());
+                    return new BusinessException("Cannot create order:: No customer exists with the provided ID");
+                });
+
+        // 2️⃣ شراء المنتجات
+        log.info("🛒 Purchasing products: {}", request.products());
         var purchasedProducts = productClient.purchaseProducts(request.products());
 
+        // 3️⃣ حفظ الطلب
+        log.info("💾 Saving order to DB");
         var order = this.repository.save(mapper.toOrder(request));
 
+        // 4️⃣ حفظ تفاصيل الطلب
         for (PurchaseRequest purchaseRequest : request.products()) {
+            log.info("📦 Saving order line for product ID: {}", purchaseRequest.productId());
             orderLineService.saveOrderLine(
                     new OrderLineRequest(
                             null,
@@ -58,6 +73,9 @@ public class OrderService {
                     )
             );
         }
+
+        // 5️⃣ إرسال طلب الدفع
+        log.info("💳 Sending payment request for order ID: {}", order.getId());
         var paymentRequest = new PaymentRequest(
                 request.amount(),
                 request.paymentMethod(),
@@ -67,6 +85,8 @@ public class OrderService {
         );
         paymentClient.requestOrderPayment(paymentRequest);
 
+        // 6️⃣ إرسال رسالة التأكيد
+        log.info("📧 Sending order confirmation for reference: {}", request.reference());
         orderProducer.sendOrderConfirmation(
                 new OrderConfirmation(
                         request.reference(),
@@ -77,6 +97,7 @@ public class OrderService {
                 )
         );
 
+        log.info("✅ Order created successfully with ID: {}", order.getId());
         return order.getId();
     }
 

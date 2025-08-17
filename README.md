@@ -5,6 +5,12 @@ The main goal is to build a **distributed, scalable, and secure system** where e
 
 ---
 
+## `Micro-Service Design`
+
+Micro-service  <br>
+![Micro-Service Design](diagrams/micro-service.png "Micro-Service-Design") <br>
+
+
 ## 🧩 Project Structure
 
 The system is divided into several independent services:

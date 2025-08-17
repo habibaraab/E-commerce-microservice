@@ -83,6 +83,7 @@ public class OrderService {
                 order.getReference(),
                 customer
         );
+
         paymentClient.requestOrderPayment(paymentRequest);
 
         // 6️⃣ إرسال رسالة التأكيد

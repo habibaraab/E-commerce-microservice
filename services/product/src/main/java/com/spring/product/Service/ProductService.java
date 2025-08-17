@@ -52,7 +52,7 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         existingProduct.setName(request.name());
         existingProduct.setDescription(request.description());
-        existingProduct.setAvailableQuantity(request.availableQuantity());
+        existingProduct.setQuantity(request.quantity());
         existingProduct.setPrice(request.price());
 
         Category category = categoryRepository.findById(request.categoryId())
@@ -89,11 +89,11 @@ public class ProductService {
         for (int i = 0; i < storedProducts.size(); i++) {
             var product = storedProducts.get(i);
             var productRequest = sortedRequest.get(i);
-            if (product.getAvailableQuantity() < productRequest.quantity()) {
+            if (product.getQuantity() < productRequest.quantity()) {
                 throw new ProductPurchaseException("Insufficient stock quantity for product with ID:: " + productRequest.productId());
             }
-            var newAvailableQuantity = product.getAvailableQuantity() - productRequest.quantity();
-            product.setAvailableQuantity(newAvailableQuantity);
+            var newAvailableQuantity = product.getQuantity() - productRequest.quantity();
+            product.setQuantity(newAvailableQuantity);
             productRepository.save(product);
             purchasedProducts.add(productMapper.toProductPurchaseResponse(product, productRequest.quantity()));
         }

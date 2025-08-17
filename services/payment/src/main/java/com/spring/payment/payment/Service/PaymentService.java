@@ -23,7 +23,7 @@ public class PaymentService {
 
         this.notificationProducer.sendNotification(
                 new PaymentNotificationRequest(
-                        request.orderReference(),
+                        request.reference(),
                         request.amount(),
                         request.paymentMethod(),
                         request.customer().firstname(),

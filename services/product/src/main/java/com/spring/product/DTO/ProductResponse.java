@@ -6,7 +6,7 @@ public record ProductResponse(
         Integer id,
         String name,
         String description,
-        double availableQuantity,
+        double quantity,
         BigDecimal price,
         Integer categoryId,
         String categoryName,

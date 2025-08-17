@@ -1,42 +1,29 @@
 server:
   port: 8222
-
 spring:
-  application:
-    name: api-gateway
   cloud:
     gateway:
       discovery:
         locator:
           enabled: true
-          lower-case-service-id: true
-      default-filters:
-        - name: Retry
-          args:
-            retries: 3
-            statuses: BAD_GATEWAY, SERVICE_UNAVAILABLE, GATEWAY_TIMEOUT
-            methods: GET, POST, PUT, DELETE
-            backoff:
-              firstBackoff: 1000ms
-              maxBackoff: 5000ms
       routes:
         - id: customer-service
-          uri: lb://customer-service
+          uri: lb:http://CUSTOMER-SERVICE
           predicates:
             - Path=/api/v1/customers/**
         - id: order-service
-          uri: lb://order-service
+          uri: lb:http://ORDER-SERVICE
           predicates:
             - Path=/api/v1/orders/**
         - id: order-lines-service
-          uri: lb://order-service
+          uri: lb:http://ORDER-SERVICE
           predicates:
             - Path=/api/v1/order-lines/**
         - id: product-service
-          uri: lb://product-service
+          uri: lb:http://PRODUCT-SERVICE
           predicates:
             - Path=/api/v1/products/**
         - id: payment-service
-          uri: lb://payment-service
+          uri: lb:http://PAYMENT-SERVICE
           predicates:
             - Path=/api/v1/payments/**

@@ -67,9 +67,9 @@ The system is divided into several independent services:
    git clone https://github.com/habibaraab/E-commerce-microservice.git
    ```
 2. Navigate to the project directory.  
- ```bash
-   cd E-commerce-microservice
-   ```
+   ```bash
+    cd E-commerce-microservice
+      ```
 3. Start services using Docker Compose:  
    ```bash
    docker-compose up -d

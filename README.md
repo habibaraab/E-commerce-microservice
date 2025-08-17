@@ -64,16 +64,19 @@ The system is divided into several independent services:
 
 1. Clone the repository:  
    ```bash
-   git clone https://github.com/your-username/microservices-ecommerce.git
+   git clone https://github.com/habibaraab/E-commerce-microservice.git
    ```
 2. Navigate to the project directory.  
+ ```bash
+   cd E-commerce-microservice
+   ```
 3. Start services using Docker Compose:  
    ```bash
-   docker-compose up
+   docker-compose up -d
    ```
 4. Access the system through the **API Gateway** at:  
    ```
-   http://localhost:8080
+   http://localhost:8222
    ```
 
 ---
@@ -88,7 +91,3 @@ The system is divided into several independent services:
   ```
 
 ---
-
-## 📷 Architecture Overview
-
-(Here you can add an architecture diagram if you have one.)

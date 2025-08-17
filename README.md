@@ -9,6 +9,15 @@ The main goal is to build a **distributed, scalable, and secure system** where e
 
 ![Micro-Service Design](diagrams/micro-service.png "Micro-Service-Design") <br>
 
+## `UML System Design`
+
+![UML System Design](diagrams/systemDesign.png "UML System Design") <br>
+
+## `Doman Driven Design(DDD)`
+
+![Doman Driven Design](diagrams/DDD.png "Doman Driven Design") <br>
+
+
 
 ## 🧩 Project Structure
 

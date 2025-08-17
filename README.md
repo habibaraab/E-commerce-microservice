@@ -35,7 +35,8 @@ The system is divided into several independent services:
 
 ## 🛠️ Technologies Used
 
-- ⚡ **Spring Boot** → Core framework to build each service quickly.  
+- ⚡ **Spring Boot** → Core framework to build each service quickly
+  (spring web -spring Data Jpa -Lombok -Validation). 
 - 🔍 **Spring Cloud Netflix Eureka** → Service Discovery (so services can find and register with each other).  
 - 🚪 **Spring Cloud Gateway** → A single entry point to the system (API Gateway).  
 - 🤝 **Feign Client** → Simplifies inter-service communication without boilerplate RestTemplate code.  
